@@ -83,7 +83,7 @@ news_obj.crawler_news()
 news_collection = Helper.getNewsCollection()
 processed_collection = Helper.getProcessNewsCollection()
 news_log_collection = Helper.getLogCollection()
-isInserted,rowCount = Helper.processNews(news_collection,processed_collection,'omron')
+isInserted,rowCount = Helper.processNewsBasedOnTitle(news_collection,processed_collection,'omron')
 print('Total rows added Process collection => ' + str(rowCount))
 
 # UPDATING LOG COLLECTION

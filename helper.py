@@ -37,13 +37,30 @@ class Helper(object):
                 try:
                     DbOperations.InsertIntoMongo(processed_collection,row)
                     isInserted = 1
-                    print('Success in inserting Process collection => [url: "' + row['title'] + '"]')
-                    DbOperations.Update_oneMongo(news_collection,{"news_title_uid": row['news_title_uid']},{"$set": {"is_used": 1}})
+                    print('Success in inserting Process collection => [url: "' + row['url'] + '"]')
+                    DbOperations.Update_oneMongo(news_collection,{"news_url_uid": row['news_url_uid']},{"$set": {"is_used": 1}})
                     rowCount = rowCount + 1
                 except Exception as e:
                     print('Error in inserting Process collection => [url: "' + row['url'] + '"]', e)
                     pass
             return isInserted,rowCount
+
+    @staticmethod
+    def processNewsBasedOnTitle(news_collection, processed_collection, company):
+        isInserted = 0
+        rowCount = 0
+        for row in DbOperations.GetData(news_collection, {"is_used": {'$exists': False}, "news_provider": company}, {}):
+            try:
+                DbOperations.InsertIntoMongo(processed_collection, row)
+                isInserted = 1
+                print('Success in inserting Process collection => [title: "' + row['title'] + '"]')
+                DbOperations.Update_oneMongo(news_collection, {"news_title_uid": row['news_title_uid']},
+                                             {"$set": {"is_used": 1}})
+                rowCount = rowCount + 1
+            except Exception as e:
+                print('Error in inserting Process collection => [title: "' + row['title'] + '"]', e)
+                pass
+        return isInserted, rowCount
 
     @staticmethod
     def getProcessNewsCollection():
