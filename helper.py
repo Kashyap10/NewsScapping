@@ -68,8 +68,7 @@ class Helper(object):
         year = today.year
         month = '{:02d}'.format(today.month)
         day = '{:02d}'.format(today.day)
-        hour = today.hour
-        strNewsDate = str(year) + str(month) + str(day) + str(hour)
+        strNewsDate = str(year) + str(month) + str(day)
         return strNewsDate
 
     @staticmethod
